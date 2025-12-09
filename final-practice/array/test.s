@@ -1,32 +1,56 @@
 .data 
-arr: .word 5, 10, 15
-size: .word 2
-iterator: .word 0
-
+  array: .word 1, 10, 100
+  message: .asciiz "Number: " 
+  newline: .asciiz "\n"
 
 .text
-main:
-la $t0, arr 
-lw $t1, size 
-lw $t2, iterator 
+  main:
+  la $t0, array
+  lw $t1, 0($t0)
+  lw $t2, 4($t0)
+  lw $t3, 8($t0)
+  
+  j end_block
 
-begin_loop:
-  bgt $t2, $t1, exit_loop
-  sll $t3, $t2, 2
-  addu $t3, $t3, $t0
 
-  lw $t6, 0($t3)
-  addu $t7, $t7, $t6
-  addi $t2, $t2, 1
-  j begin_loop
+  end_block:
 
-exit_loop:
+  li $v0, 4
+  la $a0, message 
+  syscall
 
   li $v0, 1
-  move $a0, $t7
-  syscall 
+  move $a0, $t1
+  syscall
+
+  li $v0, 4
+  la $a0, newline
+  syscall
+
+  li $v0, 4
+  la $a0, message 
+  syscall
+
+  li $v0, 1
+  move $a0, $t2
+  syscall
+
+  li $v0, 4
+  la $a0, newline
+  syscall
+
+  li $v0, 4
+  la $a0, message 
+  syscall
+
+  li $v0, 1
+  move $a0, $t3
+  syscall
+
+  li $v0, 4
+  la $a0, newline
+  syscall
 
   li $v0, 10
   syscall
-
 
